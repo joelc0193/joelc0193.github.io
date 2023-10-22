@@ -6,7 +6,12 @@
 <title>St James Park App</title>
 <style>
     body {
-        background-color: #28a745; /* Green color like leaves */
+        background-image: url('background.jpg'); /* Replace with your image's URL */
+        background-color: #28a745; /* This will be visible if the image isn't available */
+        background-position: center center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-attachment: fixed; /* This makes the background stationary, providing a parallax effect */
+        background-size: cover; /* This makes the background image cover the entire page */
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
@@ -19,7 +24,7 @@
     }
     .heading {
         font-size: 36px;
-		color: white;
+        color: white;
     }
     .image {
         cursor: pointer;
