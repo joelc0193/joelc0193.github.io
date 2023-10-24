@@ -1,10 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 <title>St James Park App</title>
 <style>
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* semi-transparent black background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* a high value to ensure it's on top of other elements */
+}
+
+
+#modal-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+
+.swiper-container {
+            width: 100%;
+            max-width: 250px;  /* adjust as necessary */
+            margin-bottom: 30px;  /* Creates space for the pagination */
+        }
+        .swiper-slide img {
+            width: 100%;  /* make images fill the slide */
+            height: auto;
+            object-fit: cover;  /* maintain aspect ratio */
+        }
+        .gallery-container {
+            position: relative;
+            display: inline-block;  /* Keeps the container snug around the swiper */
+        }
+        .swiper-pagination {
+            position: absolute;
+            width: 100%;
+            bottom: -10px;  /* Adjust this to position the pagination */
+            text-align: center;
+        }
+        .swiper-button-next, .swiper-button-prev {
+    transform: translateY(-50%);  /* Centers the buttons vertically */
+}
+.swiper-button-next {
+    right: -50px;  /* Adjusts the horizontal position of the next button */
+}
+.swiper-button-prev {
+    left: -50px;  /* Adjusts the horizontal position of the prev button */
+}
+
+
+.button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px; /* adjust this value to control the spacing between the buttons */
+    }
     body {
         background-image: url('https://raw.githubusercontent.com/joelc0193/joelc0193.github.io/master/background.png'); /* Replace with your image's URL */
         background-color: #28a745; /* This will be visible if the image isn't available */
@@ -20,8 +82,12 @@
         justify-items: center;
         align-items: center;
         height: 100vh;
-        grid-gap: 10px;
+        grid-gap: 5px;  /* Reduced gap to bring buttons closer together */
     }
+    body, .swiper-container {
+    overflow: hidden;
+}
+
     .heading {
         font-size: 36px;
         color: white;
@@ -32,42 +98,6 @@
         width: 50vmin; /* Adjust this value to control the image size */
         height: auto;
     }
-    .gallery {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, auto);
-        gap: 10px;
-        padding: 10px;
-        justify-items: center;
-        margin: 0 auto; /* Center the gallery on the page */
-        max-width: 800px; /* Set a maximum width for the gallery */
-    }
-    .gallery img {
-        width: auto;
-        height: 150px; /* Set a fixed height for the images */
-        cursor: pointer;
-        object-fit: cover; /* Ensure images cover the area without stretching */
-    }
-    .gallery-item-single {
-        grid-column: span 3;
-        text-align: center;
-    }
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-    .modal img {
-        max-width: 100%;
-        max-height: 100%;
-    }
     </style>
 </head>
 <body>
@@ -76,35 +106,57 @@
     St James Park App
 </div>
 
-<div class="gallery">
-    <!-- First Row -->
-    <img src="https://raw.githubusercontent.com/joelc0193/joelc0193.github.io/master/home.png" alt="Home" onclick="openModal(this)">
-    <img src="https://raw.githubusercontent.com/joelc0193/joelc0193.github.io/master/visitors.png" alt="Visitors" onclick="openModal(this)">
-    <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/map.png?raw=true" alt="Map" onclick="openModal(this)">
-    <!-- Second Row -->
-    <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/social1.png?raw=true" alt="Social 1" onclick="openModal(this)">
-    <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/social2.png?raw=true" alt="Social 2" onclick="openModal(this)">
-    <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/social3.png?raw=true" alt="Social 3" onclick="openModal(this)">
-    <!-- Third Row -->
-    <div class="gallery-item-single">
-        <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/profile.png?raw=true" alt="Profile" onclick="openModal(this)">
+
+
+<div class="gallery-container">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/joelc0193/joelc0193.github.io/master/home.png" alt="Home" onclick="openModal(this)"></div>
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/joelc0193/joelc0193.github.io/master/visitors.png" alt="Visitors" onclick="openModal(this)"></div>
+        <div class="swiper-slide"><img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/map.png?raw=true" alt="Map" onclick="openModal(this)"></div>
+        <div class="swiper-slide"><img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/social1.png?raw=true" alt="Social 1" onclick="openModal(this)"></div>
+        <div class="swiper-slide"><img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/social2.png?raw=true" alt="Social 2" onclick="openModal(this)"></div>
+        <div class="swiper-slide"><img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/social3.png?raw=true" alt="Social 3" onclick="openModal(this)"></div>
+        <div class="swiper-slide"><img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/profile.png?raw=true" alt="Profile" onclick="openModal(this)"></div>
     </div>
+    <!-- Add Navigation -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
 </div>
-    
-<a href="https://appstoreconnect.apple.com/apps/6464131123/appstore/info" target="_blank">
-    <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/downloadappstore.png?raw=true" class="image" alt="Image 2">
-</a>
+<!-- Add Pagination -->
+<div class="swiper-pagination"></div>
+</div>
+</div>
 
-<a href="https://play.google.com/store/apps/details?id=com.gmail.joelc0193.st_james_park_app&pcampaignid=web_share" target="_blank">
-    <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/downloadgoogleplay.png?raw=true" class="image" alt="Image 1">
-</a>
+   
+<div class="button-container">
+    <a href="https://appstoreconnect.apple.com/apps/6464131123/appstore/info" target="_blank">
+        <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/downloadappstore.png?raw=true" class="image" alt="Image 2">
+    </a>
 
+    <a href="https://play.google.com/store/apps/details?id=com.gmail.joelc0193.st_james_park_app&pcampaignid=web_share" target="_blank">
+        <img src="https://github.com/joelc0193/joelc0193.github.io/blob/master/downloadgoogleplay.png?raw=true" class="image" alt="Image 1">
+    </a>
+</div>
 
 <div class="modal" id="modal" onclick="closeModal()">
     <img id="modal-image">
 </div>
 
 <script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
     function openModal(imageElement) {
         var modal = document.getElementById('modal');
         var modalImage = document.getElementById('modal-image');
